@@ -1,9 +1,6 @@
 
 #!/bin/bash
 
-
-# TODO: rekursja i sed handling
-
 # --------- FUNCTIONS DECLARATIONS --------- 
 file_exists(){
 # function checking whether given file exists
@@ -41,6 +38,21 @@ files_to_upper(){
 	done
 }
 
+files_to_upper_r(){
+# function transforming given files to uppercase recursively
+	files=$@
+	for file in $files
+	do
+		if [ -z "$file" ]; then
+			break
+		fi
+
+		mv $file $(to_upper $file) 2>/dev/null
+		files_to_upper_r $(echo $files | awk '{$1=""; print $0;}')
+
+	done
+}
+
 to_lower(){
 # function transforming given filename into lowercase, doesn't change the directory name
 	fname=$(basename "$1" | tr [A-Z] [a-z])
@@ -56,6 +68,63 @@ files_to_lower(){
 	done
 }
 
+files_to_lower_r(){
+# function transforming given files to lowercase recursively
+	files=$@
+	for file in $files
+	do
+		if [ -z "$file" ]; then
+			break
+		fi
+
+		mv $file $(to_lower $file) 2>/dev/null
+		files_to_upper_r $(echo $files | awk '{$1=""; print $0;}')
+
+	done
+}
+
+files_sed(){
+# function transforming given file names with given sed pattern
+
+	sed_p=$1
+	files=$(echo $@ | awk '{$1=""; print $0;}')
+
+	for file in $files
+	do
+		fname=$(basename "$file")
+		dname=$(dirname "$file")
+		new_name="$dname/$(echo $fname | sed $sed_p)" 
+
+		mv $file $new_name 2>/dev/null
+	done
+
+}
+
+files_sed_r(){
+# function transforming given file names with given sed pattern recursively
+
+	sed_p=$1
+	files=$(echo $@ | awk '{$1=""; print $0;}')
+
+	for file in $files
+	do
+
+		if [ -z "$file" ]; then
+			break
+		fi
+
+		fname=$(basename "$file")
+		dname=$(dirname "$file")
+		new_name="$dname/$(echo $fname | sed $sed_p)" 
+
+		mv $file $new_name 2>/dev/null
+
+		files_sed_r $sed_p $(echo $files | awk '{$1=""; print $0;}')
+
+	done
+
+}
+
 help_text(){
 	echo "Script 'modify' that modifies given filenames."
 	echo "Syntax: modify [-r] [-l|-u] <file1 file2 ...> or modify [-r] <sed pattern> <file1 file2 ...>" 
@@ -63,7 +132,7 @@ help_text(){
 	echo "	-l		convert filenames to lowercase"
 	echo "	-u		convert filenames to uppercase"
 	echo "	-h		display this help and exit"
-	echo "	<sed pattern>  	sed pattern to modify the files, to be wrapped in quotation marks."
+	echo "	-s <sed pattern>  	sed pattern to modify the files (given flag -s)."
 	echo "Exit Codes:"
 	echo "	0	if OK,"
 	echo "	2	if script ran into serious trouble (e.g. invalid flag, no arguments passed)"
@@ -82,11 +151,18 @@ fi
 # only files to be modified
 FILES=$(get_files "$@")
 
+# if given files do not exist, exit with success
+if [ -z "$FILES" ]; then
+	echo "No files changed."
+	exit 0
+fi
+
 lower=false
 upper=false
 recursive=false
+sed_p=false
 
-while getopts "hrlu" flag; do
+while getopts "hrlus:" flag; do
 	case "$flag" in
 		h)	help_text ;;
 
@@ -94,9 +170,20 @@ while getopts "hrlu" flag; do
 
 		l)  lower=true ;;
 
-		r) recursive=true ;;
+		r)	recursive=true ;;
 		
-		*)	echo "Error: invalid flag $1 (available: -h -u -l -r)."
+		s)	sed_p=true
+			
+			pattern=${OPTARG}
+			first_file=$(echo $FILES | awk '{print $1;}')
+
+			if [ "$pattern" = "$first_file" ]; then
+				echo "No sed pattern given."
+				exit 2
+			fi
+			;;
+		
+		*)	echo "Error: invalid flag $1 (available: -h -u -l -r -s)."
 			exit 2 ;;
 	esac
 
@@ -107,11 +194,28 @@ if $lower && $upper; then
 	exit 2
 fi
 
-if $lower; then
-	files_to_lower $FILES
+# recursive
+if $recursive; then
+	if $lower; then  # to lower
+		files_to_lower_r $FILES
 
-elif $upper; then
-	files_to_upper $FILES
+	elif $upper; then  # to upper
+		files_to_upper_r $FILES
+
+	elif $sed_p; then  # sed pattern
+		files_sed_r $pattern $FILES
+	fi 
+# iterative
+else
+	if $lower; then  # to lower
+		files_to_lower $FILES
+
+	elif $upper; then  # to upper
+		files_to_upper $FILES
+
+	elif $sed_p; then  # sed pattern
+		files_sed $pattern $FILES
+	fi 
 fi 
 
 
