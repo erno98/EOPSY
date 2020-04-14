@@ -9,6 +9,14 @@ Usage:
 
 Note, that the order of given arguments doesn't matter (**except the 'sed pattern' after -s flag**).
 
+### Usage
+
+**-l** -> lowerize name of the file  
+**-u** -> uppercase name of the file  
+**-s 'sed pattern'** -> change given filenames with sed pattern  
+**-r** -> perform changes recursively  
+**-h** -> get information (help) about the script
+
 ### Key concepts
 If the file does not exist or the given path is wrong, the script **will ommit such entries**. If no files were changed, it will be signalized by the script, although with code 0 (success).  
 
@@ -22,7 +30,6 @@ Script will modify only the basename of the file. For example, given:
         
         modify -u dir_1/file_1           # will result in 'dir_1/FILE_1'
         modify -l DIR_2/subdir_1/File_4  # will result in 'DIR_2/subdir_1/file_4'
-
 
 ## modify_examples.sh
 Script for testing of modify.sh  
