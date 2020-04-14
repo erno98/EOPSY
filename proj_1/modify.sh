@@ -34,7 +34,7 @@ files_to_upper(){
 # function transforming given files to uppercase, see to_upper() function
 	for file in $@
 	do
-		mv $file $(to_upper $file)
+		mv $file $(to_upper $file) 2>/dev/null
 	done
 }
 
@@ -87,13 +87,15 @@ files_sed(){
 # function transforming given file names with given sed pattern
 
 	sed_p=$1
-	files=$(echo $@ | awk '{$1=""; print $0;}')
 
+	files=$(echo $@ | awk '{$1=""; print $0;}')
 	for file in $files
 	do
 		fname=$(basename "$file")
 		dname=$(dirname "$file")
-		new_name="$dname/$(echo $fname | sed $sed_p)" 
+
+		fname=$(echo "$fname" | sed "$sed_p")
+		new_name="$dname/$fname" 
 
 		mv $file $new_name 2>/dev/null
 	done
@@ -108,14 +110,15 @@ files_sed_r(){
 
 	for file in $files
 	do
-
 		if [ -z "$file" ]; then
 			break
 		fi
 
 		fname=$(basename "$file")
 		dname=$(dirname "$file")
-		new_name="$dname/$(echo $fname | sed $sed_p)" 
+
+		fname=$(echo "$fname" | sed "$sed_p")
+		new_name="$dname/$fname" 
 
 		mv $file $new_name 2>/dev/null
 
@@ -183,7 +186,7 @@ while getopts "hrlus:" flag; do
 			fi
 			;;
 		
-		*)	echo "Error: invalid flag $1 (available: -h -u -l -r -s)."
+		*)	echo "Error: invalid flag (available: -h -u -l -r -s)."
 			exit 2 ;;
 	esac
 
