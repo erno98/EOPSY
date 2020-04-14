@@ -34,5 +34,5 @@ Script will modify only the basename of the file. For example, given:
 ## modify_examples.sh
 Script for testing of modify.sh  
 
-
+___
 Created for course of Operating Systems, Warsaw University of Technology, Faculty of Electronics and Information Technology, 2020. Made by Ernest Pokropek
