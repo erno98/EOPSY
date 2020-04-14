@@ -23,11 +23,20 @@ get_files(){
 	done
 }
 
+
 to_upper(){
 # function transforming given filename into uppercase, doesn't change the directory name
-	fname=$(basename "$1" | tr [a-z] [A-Z])
+
+	filename=$(basename "$1")
+	if [ "${filename%.*}" = "${filename##*.}" ]; then
+		ext=""
+	else
+		ext=".${filename##*.}"
+	fi
+	filename=$(echo "${filename%.*}" | tr [a-z] [A-Z])
+
 	dname=$(dirname "$1")
-	echo "$dname/$fname" 
+	echo "$dname/$filename$ext" 
 }
 
 files_to_upper(){
@@ -55,9 +64,16 @@ files_to_upper_r(){
 
 to_lower(){
 # function transforming given filename into lowercase, doesn't change the directory name
-	fname=$(basename "$1" | tr [A-Z] [a-z])
+	filename=$(basename "$1")
+	if [ "${filename%.*}" = "${filename##*.}" ]; then
+		ext=""
+	else
+		ext=".${filename##*.}"
+	fi
+	filename=$(echo "${filename%.*}" | tr [A-Z] [a-z])
+
 	dname=$(dirname "$1")
-	echo "$dname/$fname" 
+	echo "$dname/$filename$ext" 
 }
 
 files_to_lower(){

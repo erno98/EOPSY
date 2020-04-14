@@ -31,7 +31,7 @@ echo "Before:"
 ls test
 
 ./modify.sh -u "test/Test1"  # expected output: test/TEST1
-./modify.sh -u "test/Test2.txt"  # expected output: test/TEST2.TXT
+./modify.sh -u "test/Test2.txt"  # expected output: test/TEST2.txt
 ./modify.sh -u "test/TesSsT3"  # expected output: tessst/TESSST3
 
 echo "After -u flag:"
@@ -55,7 +55,7 @@ echo '=========================='
 # sed pattern test
 echo "Before:"
 ls test
-./modify.sh -s 's/Test/my_Test/' "test/Test1"  # expected output: test/XXX_1
+./modify.sh -s 's/Test/my_Test/' "test/Test1"  # expected output: test/my_Test1
 ./modify.sh -s 's/Test/sed_works_/' test/my_Test1 test/Test2.txt # expected output: my_sed_works_1 sed_works_2.txt
 
 echo "After sed:"
@@ -90,7 +90,7 @@ echo "Before:"
 ls test
 
 ./modify.sh -r -u "test/Test1"  # expected output: test/TEST1
-./modify.sh -u -r "test/Test2.txt"  # expected output: test/TEST2.TXT
+./modify.sh -u -r "test/Test2.txt"  # expected output: test/TEST2.txt
 ./modify.sh -r -u "test/TesSsT3"  # expected output: tessst/TESSST3
 
 echo "After -u flag:"
@@ -114,7 +114,7 @@ echo '=========================='
 # sed pattern test
 echo "Before:"
 ls test
-./modify.sh -r -s 's/Test/my_Test/' test/Test1  # expected output: test/XXX_1
+./modify.sh -r -s 's/Test/my_Test/' test/Test1  # expected output: test/my_Test1
 ./modify.sh -r -s 's/Test/sed_works_/' test/my_Test1 test/Test2.txt # expected output: my_sed_works_1 sed_works_2.txt
 
 echo "After sed:"
@@ -139,3 +139,5 @@ echo
 echo 'both -u and -l flags'
 echo './modify.sh -u -l "test/Test1"'
 ./modify.sh -u -l "test/Test1" 
+
+rm -r test

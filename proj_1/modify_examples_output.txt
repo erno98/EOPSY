@@ -14,7 +14,7 @@ Test2.txt
 After -u flag:
 TESSST3
 TEST1
-TEST2.TXT
+TEST2.txt
 ==========================
 ./modify.sh -u -l "test/Test1" 
 Error: cannot set both -u and -l flag.
@@ -50,7 +50,7 @@ Test2.txt
 After -u flag:
 TESSST3
 TEST1
-TEST2.TXT
+TEST2.txt
 ==========================
 ./modify.sh -u -l "test/Test1" 
 Error: cannot set both -u and -l flag.
