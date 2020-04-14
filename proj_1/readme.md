@@ -11,9 +11,9 @@ Note, that the order of given arguments doesn't matter (**except the 'sed patter
 
 ### Usage
 
-**-l** -> lowerize name of the file  
-**-u** -> uppercase name of the file  
-**-s 'sed pattern'** -> change given filenames with sed pattern  
+**-l** -> lowerize name of the file(s)  
+**-u** -> uppercase name of the file(s)  
+**-s 'sed pattern'** -> change given filename(s) with sed pattern  
 **-r** -> perform changes recursively  
 **-h** -> get information (help) about the script
 
