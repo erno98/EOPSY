@@ -31,7 +31,10 @@ Script will modify only the basename of the file. For example, given:
         modify -u dir_1/file_1           # will result in 'dir_1/FILE_1'
         modify -l DIR_2/subdir_1/File_4  # will result in 'DIR_2/subdir_1/file_4'
 
-**Do note**, that both -u and -l flags don't have impact on extension (modify -u file.txt --> FILE.txt), however, **sed pattern can modify** the extension.  
+**Do note**, that both -u and -l flags don't have impact on extension, however, **sed pattern can modify** the extension. Example:  
+
+        modify -u file.txt                      # will result in FILE.txt
+        modify -s 's/.txt/.csv/' file.txt       # will result in file.csv
 
 ## modify_examples.sh
 Script for testing of modify.sh  
