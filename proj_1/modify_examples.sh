@@ -141,3 +141,10 @@ echo './modify.sh -u -l "test/Test1"'
 ./modify.sh -u -l "test/Test1" 
 
 rm -r test
+echo
+echo '=================================='
+
+echo
+echo "Help message (-h)"
+echo
+./modify.sh -h

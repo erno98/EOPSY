@@ -148,10 +148,10 @@ help_text(){
 	echo "Script 'modify' that modifies given filenames."
 	echo "Syntax: modify [-r] [-l|-u] <file1 file2 ...> or modify [-r] <sed pattern> <file1 file2 ...>" 
 	echo "	-r		recursive modification of given files"
-	echo "	-l		convert filenames to lowercase"
-	echo "	-u		convert filenames to uppercase"
+	echo "	-l		convert filenames to lowercase (doesn't impact extenion)"
+	echo "	-u		convert filenames to uppercase (doesn't impact extenion)"
 	echo "	-h		display this help and exit"
-	echo "	-s <sed pattern>  	sed pattern to modify the files (given flag -s)."
+	echo "	-s		sed pattern to modify the files (given <sed pattern> after flag -s), can impact extension."
 	echo "Exit Codes:"
 	echo "	0	if OK,"
 	echo "	2	if script ran into serious trouble (e.g. invalid flag, no arguments passed)"
@@ -169,12 +169,6 @@ fi
 
 # only files to be modified
 FILES=$(get_files "$@")
-
-# if given files do not exist, exit with success
-if [ -z "$FILES" ]; then
-	echo "No files changed."
-	exit 0
-fi
 
 lower=false
 upper=false
@@ -207,6 +201,12 @@ while getopts "hrlus:" flag; do
 	esac
 
 done
+
+# if given files do not exist, exit with success
+if [ -z "$FILES" ]; then
+	echo "No files changed."
+	exit 0
+fi
 
 if $lower && $upper; then
 	echo "Error: cannot set both -u and -l flag."

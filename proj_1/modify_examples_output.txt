@@ -81,3 +81,21 @@ Error: invalid flag (available: -h -u -l -r -s).
 both -u and -l flags
 ./modify.sh -u -l "test/Test1"
 Error: cannot set both -u and -l flag.
+
+==================================
+
+Help message (-h)
+
+Script 'modify' that modifies given filenames.
+Syntax: modify [-r] [-l|-u] <file1 file2 ...> or modify [-r] <sed pattern> <file1 file2 ...>
+	-r		recursive modification of given files
+	-l		convert filenames to lowercase (doesn't impact extenion)
+	-u		convert filenames to uppercase (doesn't impact extenion)
+	-h		display this help and exit
+	-s		sed pattern to modify the files (given <sed pattern> after flag -s), can impact extension.
+Exit Codes:
+	0	if OK,
+	2	if script ran into serious trouble (e.g. invalid flag, no arguments passed)
+Script done for 2020 summer semester of Operating Systems course at Warsaw University of Technology, Faculty of Electronics and Information Technology
+Made by Ernest Pokropek
+No files changed.
