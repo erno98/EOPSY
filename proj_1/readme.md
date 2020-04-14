@@ -1,18 +1,26 @@
 # PROJECT 1 - MODIFY 
 
-Task:
+## modify.sh
+Script modifying the given filenames (relative or absolute path) either by lowerizing, uppercasing, or given sed pattern. The script can perform all of the mentioned modification either recursively (-r) or iteratively (default).
+Usage:
 
-    Write a script modify with the following syntax:
-    modify [-r] [-l|-u] <dir/file names...>
-    modify [-r] <sed pattern> <dir/file names...>
-    modify [-h]
+        modify [-r] [-l|-u] <file_1 file_2 ... file_n>
+        modify [-r] [-s <sed pattern>] <file1 file2 ... file_n>
 
-    modify_examples
+Note, that the order of given arguments doesn't matter (**except the 'sed pattern' after -s flag**).
 
-    which will modify file names. The script is dedicated to lowerizing (-l)
-    file names, uppercasing (-u) file names or internally calling sed
-    command with the given sed pattern which will operate on file names.
-    Changes may be done either with recursion (-r) or without it. Write a
-    second script, named modify_examples, which will lead the tester of the
-    modify script through the typical, uncommon and even incorrect scenarios
-    of usage of the modify script.
+### Key concepts
+If the file does not exist or the given path is wrong, the script **will ommit such entries**. If no files were changed, it will be signalized by the script, although with code 0 (success).  
+
+Script can't modify **n** groups of files in **n** different ways, i.e. such procedure is not possible:
+
+        modify -l file_1 file_2 -u file_3 file_4  # NOT POSSIBLE
+Instead, user should make two separate calls:
+
+        modify -l file_1 file_2 && modify -u file_3 file_4
+Script will modify only the basename of the file. For example, given:
+        
+        modify -u dir_1/file_1           # will result in 'dir_1/FILE_1'
+        modify -l DIR_2/subdir_1/File_4  # will result in 'DIR_2/subdir_1/file_4'
+
+Created for course of Operating Systems, Warsaw University of Technology, Faculty of Electronics and Information Technology, 2020. Made by Ernest Pokropek
