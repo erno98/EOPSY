@@ -23,4 +23,9 @@ Script will modify only the basename of the file. For example, given:
         modify -u dir_1/file_1           # will result in 'dir_1/FILE_1'
         modify -l DIR_2/subdir_1/File_4  # will result in 'DIR_2/subdir_1/file_4'
 
+
+## modify_examples.sh
+Script for testing of modify.sh  
+
+
 Created for course of Operating Systems, Warsaw University of Technology, Faculty of Electronics and Information Technology, 2020. Made by Ernest Pokropek
