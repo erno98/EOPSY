@@ -1,0 +1,83 @@
+Before:
+TesSsT3
+Test1
+Test2.txt
+After -l flag:
+tessst3
+test1
+test2.txt
+==========================
+Before:
+TesSsT3
+Test1
+Test2.txt
+After -u flag:
+TESSST3
+TEST1
+TEST2.TXT
+==========================
+./modify.sh -u -l "test/Test1" 
+Error: cannot set both -u and -l flag.
+
+./modify.sh -u -l "test/Test1"
+Error: cannot set both -u and -l flag.
+==========================
+Before:
+TesSsT3
+Test1
+Test2.txt
+After sed:
+my_sed_works_1
+sed_works_2.txt
+TesSsT3
+==========================
+     RECURSION TESTS
+==========================
+
+Before:
+TesSsT3
+Test1
+Test2.txt
+After -l flag:
+tessst3
+Test1
+test2.txt
+==========================
+Before:
+TesSsT3
+Test1
+Test2.txt
+After -u flag:
+TESSST3
+TEST1
+TEST2.TXT
+==========================
+./modify.sh -u -l "test/Test1" 
+Error: cannot set both -u and -l flag.
+
+./modify.sh -u -l "test/Test1"
+Error: cannot set both -u and -l flag.
+==========================
+Before:
+TesSsT3
+Test1
+Test2.txt
+After sed:
+my_sed_works_1
+sed_works_2.txt
+TesSsT3
+==================================
+INCORRECT USAGE AND ERROR MESSAGES
+==================================
+
+no arguments
+./modify.sh
+No arguments passed to the script.
+
+invalid flag -x
+./modify.sh -r -u -x 's/Test/my_Test/' test/Test1
+Error: invalid flag (available: -h -u -l -r -s).
+
+both -u and -l flags
+./modify.sh -u -l "test/Test1"
+Error: cannot set both -u and -l flag.
