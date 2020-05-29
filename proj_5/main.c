@@ -123,15 +123,15 @@ int main(int argc, char** argv)
         PERROR_EXIT("semctl error for waiting room mutex");
 
     // barbers
-    arg.val = N1;
+    arg.val = 0;
     if(semctl(sems.barbers, FEMALE, SETVAL, arg) < 0)
         PERROR_EXIT("semctl error when setting female barbers [N1] ");
 
-    arg.val = N2;
+    arg.val = 0;
     if(semctl(sems.barbers, MALE, SETVAL, arg) < 0)
         PERROR_EXIT("semctl error when setting male barbers [N2]");
 
-    arg.val = N3;
+    arg.val = 0;
     if(semctl(sems.barbers, UNISEX, SETVAL, arg) < 0)
         PERROR_EXIT("semctl error when setting unisex barbers [N3]");
 
