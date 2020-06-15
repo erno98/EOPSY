@@ -40,12 +40,13 @@ void* philosopher(void* num);
 //  ------------------------------ main function
 
 int main(int argc, char** argv){
-    
+
 	// initialize mutexes to locked state
 	for(int i=0; i<N; i++) {
 		pthread_mutex_lock(s+i);
 	}
 
+    // numbers of the philosophers
 	int* num = (int*) malloc(N*sizeof(int));
 
 	// start the philosopher threads
@@ -56,7 +57,7 @@ int main(int argc, char** argv){
 		if(pthread_create(&philosophers[i], NULL, philosopher, (void*) (num+i))){
             // thread couldn't be created, exit with code 1
 			fprintf(stderr, "[Philosopher: %d] failed to create. Capitalists are happy.", i);
-			exit(1);
+			exit(EXIT_FAILURE);
 		}	
 	}
 
