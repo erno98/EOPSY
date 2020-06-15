@@ -106,23 +106,6 @@ int main(int argc, char** argv){
 	return 0;
 }
 
-void print_help()
-{
-	printf("Program copying a file to another file, either read-write or by memory mapping.\n");
-	printf("Usage:\n\n");
-	printf("\tcopy [-m] <file_name> <new_file_name>\n");
-	printf("\tcopy [-h]\n\n");
-	printf("Option -m enables memory mapping, by default program is usying read-write methodology.\n\n");
-	printf("<file_name>\t(first specified) is the name of the file to be copied\n");
-	printf("<new_file_name>\t(second specified) is the target file.\n\n");
-	printf("Running with -h or no arguments shows this message.\n");
-	printf("Example usage:\n");
-	printf("\t copy -m file_to_be_copied file_new\n");
-	printf("\t copy file_to_be_copied file_new\n");
-	printf("\t copy -h\n\n");
-}
-
-
 void copy(int file_from, int file_to, char how){
 	if(how == 'm'){
 		copy_memory_map(file_from, file_to);
@@ -209,3 +192,20 @@ void copy_memory_map(int from_descriptor, int to_descriptor){
 
 	return;
 }
+
+void print_help()
+{
+	printf("Program copying a file to another file, either read-write or by memory mapping.\n");
+	printf("Usage:\n\n");
+	printf("\tcopy [-m] <file_name> <new_file_name>\n");
+	printf("\tcopy [-h]\n\n");
+	printf("Option -m enables memory mapping, by default program is usying read-write methodology.\n\n");
+	printf("<file_name>\t(first specified) is the name of the file to be copied\n");
+	printf("<new_file_name>\t(second specified) is the target file.\n\n");
+	printf("Running with -h or no arguments shows this message.\n");
+	printf("Example usage:\n");
+	printf("\t copy -m file_to_be_copied file_new\n");
+	printf("\t copy file_to_be_copied file_new\n");
+	printf("\t copy -h\n\n");
+}
+
